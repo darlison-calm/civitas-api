@@ -1,5 +1,9 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
+/**
+ * Enum para representar os anos letivos disponíveis.
+ * @enum {string}
+ */
 export enum AnoLetivo {
   ANO_1 = '1º ano',
   ANO_2 = '2º ano',
@@ -9,12 +13,19 @@ export enum AnoLetivo {
   ANO_6 = '6º ano'
 }
 
+/**
+ * Enum para representar os periodos letivos disponíveis.
+ * @enum {string}
+ */
 export enum PeriodoLetivo {
   MANHA = 'Manhã',
   TARDE = 'Tarde',
   NOITE = 'Noite'
 }
-
+/**
+ * Enum para representar os tipos de ensino.
+ * @enum {string}
+ */
 export enum TipoEnsino {
   MATERNAL = 'Maternal',
   PRE_ESCOLA = 'Pré-escola',
@@ -22,26 +33,23 @@ export enum TipoEnsino {
 }
 
 @Entity('turmas')
-export class Turmas {
+export class Turma {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column({
-    name: 'ano_letivo',
     type: 'enum',
     enum: AnoLetivo
   })
   anoLetivo: AnoLetivo
 
   @Column({
-    name: 'periodo_letivo',
     type: 'enum',
     enum: PeriodoLetivo
   })
   periodoLetivo: PeriodoLetivo
 
   @Column({
-    name: 'ensino',
     type: 'enum',
     enum: TipoEnsino
   })
@@ -49,16 +57,16 @@ export class Turmas {
 
 
   @Column({ 
-    name: 'turma_apelido',
     unique: true,
-    type: 'text'
+    type: 'varchar',
+    length: 20
   })
   turmaApelido: string;
 
-  @CreateDateColumn({name: 'data_criacao'})
+  @CreateDateColumn()
   dataCriacao: Date;
 
-  @UpdateDateColumn({name: 'data_atualizacao'})
+  @UpdateDateColumn()
   dataAtualizacao: Date;
 }
 
