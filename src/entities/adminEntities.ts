@@ -9,9 +9,6 @@ import { CriptografarSenhaAntesDeInserir, compararSenha } from '../utils/senhaUt
 
 @Entity()
 export class Admin extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column({ unique: true })
   apelido: string;
 
