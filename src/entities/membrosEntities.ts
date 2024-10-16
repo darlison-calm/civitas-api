@@ -21,12 +21,6 @@ export class Membros {
     cpf: string;
 
     @Column()
-    senha: string;
-
-    @Column({ unique: true })
-    email: string;
-
-    @Column()
     tipoConta: 'admin' | 'professor' | 'aluno' | 'responsavel';
 
     @Column()
