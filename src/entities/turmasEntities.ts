@@ -35,9 +35,6 @@ export enum TipoEnsino {
 
 @Entity('turmas')
 export class Turma extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number
-
   @Column({
     type: 'enum',
     enum: AnoLetivo

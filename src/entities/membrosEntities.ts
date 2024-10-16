@@ -1,16 +1,12 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn
 } from 'typeorm';
 
 import { BaseEntity, TipoConta } from './baseEntity';
 
 @Entity()
 export class Membros extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column({ unique: true })
   numeroMatricula: string;
 
