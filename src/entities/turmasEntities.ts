@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity } from "./baseEntity";
 
 /**
  * Enum para representar os anos letivos disponíveis.
@@ -33,7 +34,7 @@ export enum TipoEnsino {
 }
 
 @Entity('turmas')
-export class Turma {
+export class Turma extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -62,12 +63,4 @@ export class Turma {
     length: 20
   })
   turmaApelido: string;
-
-  @CreateDateColumn()
-  dataCriacao: Date;
-
-  @UpdateDateColumn()
-  dataAtualizacao: Date;
 }
-
-
