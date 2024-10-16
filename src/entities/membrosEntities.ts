@@ -2,28 +2,32 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   BeforeInsert,
   BeforeUpdate
 } from 'typeorm';
-import { Membros } from './membrosEntities';
 
 @Entity()
-export class Admin {
+export class Membros {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ unique: true })
-  nickname: string;
-
-  @Column({ unique: true })
-  email: string;
+  numeroMatricula: string;
 
   @Column()
-  senha: string;
+  nomeCompleto: string;
 
-  @ManyToOne(() => Membros, (Membros) => Membros.tipoConta === 'admin')
-  membros: Membros;
+  @Column()
+  dataNascimento: Date;
+
+  @Column({ unique: true })
+  rg: string;
+
+  @Column({ unique: true })
+  cpf: string;
+
+  @Column()
+  tipoConta: 'admin' | 'professor' | 'aluno' | 'responsavel';
 
   @Column()
   dataCriacao: Date;
