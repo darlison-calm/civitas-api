@@ -1,18 +1,22 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
-  BeforeInsert
-} from 'typeorm'
+  PrimaryGeneratedColumn
+} from 'typeorm';
 
-import { BaseEntity, TipoConta } from './baseEntity'
-
-import * as bcrypt from 'bcrypt'
+import { BaseEntity, TipoConta } from './baseEntity';
+import { CriptografarSenhaAntesDeInserir, compararSenha } from '../utils/senhaUtils';
 
 @Entity()
 export class Admin extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
+
   @Column({ unique: true })
-  nickname: string;
+  apelido: string;
+
+  @Column()
+  tipoConta: TipoConta;
 
   @Column({ unique: true })
   email: string;
@@ -20,11 +24,12 @@ export class Admin extends BaseEntity {
   @Column()
   senha: string;
 
-  @BeforeInsert()
-  async hashPassword() {
-    this.senha = await bcrypt.hash(this.senha, 10);
+  @CriptografarSenhaAntesDeInserir()
+  async criptografarSenha() {
+    // A lógica de criptografia está no decorator
   }
 
-  @Column()
-  tipoConta: TipoConta;
+  async compararSenha(senhaPlana: string): Promise<boolean> {
+    return await compararSenha(senhaPlana, this.senha);
+  }
 }
