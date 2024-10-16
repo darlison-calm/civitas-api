@@ -15,7 +15,7 @@ export class Admin {
     @Column()
     senha: string;
 
-    @ManyToOne(() => Membros, Membros => Membros.tipoConta)
+    @ManyToOne(() => Membros, Membros => Membros.tipoConta === 'admin')
     membros: Membros;
 
     @Column()
