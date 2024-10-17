@@ -48,4 +48,14 @@ export class MembrosController {
       res.status(500).json({ error: 'Erro ao atualizar membro' });
     }
   }
+
+  async deletarMembro(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+      await this.membrosService.deletarMembro(id);
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao deletar membro' });
+    }
+  }
 }

@@ -41,4 +41,14 @@ export class MembrosService {
     await membrosRepository.update(idNumber, dadosMembro);
     return await membrosRepository.findOneBy({ id: idNumber });
   }
+
+  async deletarMembro(id: string) {
+    if (!MysqlDataSource.isInitialized) {
+      await MysqlDataSource.initialize();
+    }
+
+    const idNumber = Number(id);
+    const membrosRepository = MysqlDataSource.getRepository(Membros);
+    return await membrosRepository.delete(idNumber);
+  }
 }

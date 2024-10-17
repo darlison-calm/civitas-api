@@ -12,5 +12,8 @@ membrosRouter.post('/', (req, res) => membrosController.criarMembro(req, res));
 membrosRouter.put('/:id', (req, res) =>
   membrosController.atualizarMembro(req, res)
 );
+membrosRouter.delete('/:id', (req, res) =>
+  membrosController.deletarMembro(req, res)
+);
 
 export default membrosRouter;
