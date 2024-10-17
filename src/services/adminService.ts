@@ -29,12 +29,18 @@ export class AdminService {
   /**
    * Cria um novo administrador, associando-o a um membro existente e criptografando sua senha.
    * @param apelido - O apelido do administrador.
+   * @param email - O email do administrador.
    * @param senha - A senha do administrador.
    * @param membroId - O ID do membro associado ao administrador.
    * @throws Se o membro não for encontrado, se a senha não for válida ou se a senha for omitida.
    * @returns O administrador criado.
    */
-  async criarAdmin(apelido: string, senha: string, membroId: number) {
+  async criarAdmin(
+    apelido: string,
+    email: string,
+    senha: string,
+    membroId: number
+  ) {
     const membrosRepository = MysqlDataSource.getRepository(Membros);
     const adminRepository = MysqlDataSource.getRepository(Admin);
     const membro = await membrosRepository.findOneBy({ id: membroId });
@@ -57,6 +63,7 @@ export class AdminService {
     const novoAdmin = new Admin();
 
     novoAdmin.apelido = apelido;
+    novoAdmin.email = email;
     novoAdmin.senha = senhaCriptografada;
     novoAdmin.membro = membro;
     return await adminRepository.save(novoAdmin);
@@ -66,6 +73,7 @@ export class AdminService {
    * Atualiza um administrador existente, associando-o a um novo membro e atualizando a senha, se fornecida.
    * @param id - O ID do administrador a ser atualizado.
    * @param apelido - O novo apelido do administrador.
+   * @param email - O novo email do administrador.
    * @param senha - A nova senha do administrador (opcional).
    * @param membroId - O ID do novo membro associado ao administrador.
    * @throws Se o membro não for encontrado ou se a senha não for válida.
@@ -74,6 +82,7 @@ export class AdminService {
   async atualizarAdmin(
     id: number,
     apelido: string,
+    email: string,
     senha: string,
     membroId: number
   ) {
@@ -97,6 +106,7 @@ export class AdminService {
     }
 
     admin.apelido = apelido;
+    admin.email = email;
     admin.senha = senha ? await criptografarSenha(senha) : admin.senha;
     admin.membro = membro;
     return await adminRepository.save(admin);

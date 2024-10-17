@@ -12,14 +12,6 @@ export class Membros extends BaseEntity {
   numeroMatricula: string;
 
   /**
-   * Endereço de e-mail único do membro.
-   * @type {string}
-   * @unique
-   */
-  @Column({ unique: true })
-  email: string;
-
-  /**
    * Nome completo do membro.
    * @type {string}
    */

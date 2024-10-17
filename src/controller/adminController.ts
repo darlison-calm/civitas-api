@@ -29,9 +29,10 @@ export class AdminController {
 
   async criarAdmin(req: Request, res: Response) {
     try {
-      const { apelido, senha, membroId } = req.body;
+      const { apelido, email, senha, membroId } = req.body;
       const novoAdmin = await this.adminService.criarAdmin(
         apelido,
+        email,
         senha,
         Number(membroId)
       );
@@ -44,10 +45,11 @@ export class AdminController {
   async atualizarAdmin(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const { apelido, senha, membroId } = req.body;
+      const { apelido, email, senha, membroId } = req.body;
       const adminAtualizado = await this.adminService.atualizarAdmin(
         Number(id),
         apelido,
+        email,
         senha,
         Number(membroId)
       );

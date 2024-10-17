@@ -6,6 +6,7 @@
  *       type: object
  *       required:
  *         - apelido
+ *         - email
  *         - senha
  *         - membroId
  *       properties:
@@ -15,6 +16,9 @@
  *         apelido:
  *           type: string
  *           description: Apelido único do administrador.
+ *         email:
+ *           type: string
+ *           description: Email do administrador.
  *         senha:
  *           type: string
  *           description: Senha criptografada do administrador.
@@ -24,6 +28,7 @@
  *       example:
  *         id: 1
  *         apelido: "admin123"
+ *         email: "U9w0H@example.com"
  *         senha: "Admin!123"
  *         membroId: 1
  *
