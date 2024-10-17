@@ -75,4 +75,9 @@ export class AdminService {
     admin.membro = membro;
     return await adminRepository.save(admin);
   }
+
+  async deletarAdmin(id: number) {
+    const adminRepository = MysqlDataSource.getRepository(Admin);
+    return await adminRepository.delete(id);
+  }
 }
