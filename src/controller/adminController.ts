@@ -26,4 +26,18 @@ export class AdminController {
       res.status(500).json({ error: 'Erro ao buscar administrador.' });
     }
   }
+
+  async criarAdmin(req: Request, res: Response) {
+    try {
+      const { apelido, senha, membroId } = req.body;
+      const novoAdmin = await this.adminService.criarAdmin(
+        apelido,
+        senha,
+        Number(membroId)
+      );
+      res.status(201).json(novoAdmin);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }

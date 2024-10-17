@@ -26,3 +26,11 @@ export function CriptografarSenhaAntesDeInserir(): MethodDecorator {
     };
   };
 }
+
+export function validarSenha(senha: string): boolean {
+  const tem8Caracteres = senha.length === 8;
+  const temMaiuscula = /[A-Z]/.test(senha);
+  const temCaractereEspecial = /[!@#$%^&*(),.?":{}|<>]/.test(senha);
+
+  return tem8Caracteres && temMaiuscula && temCaractereEspecial;
+}

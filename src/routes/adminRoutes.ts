@@ -8,5 +8,6 @@ adminRouter.get('/', (req, res) => adminController.listarAdmins(req, res));
 adminRouter.get('/:id', (req, res) =>
   adminController.buscarAdminPorId(req, res)
 );
+adminRouter.post('/', (req, res) => adminController.criarAdmin(req, res));
 
 export default adminRouter;
