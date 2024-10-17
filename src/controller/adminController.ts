@@ -12,4 +12,18 @@ export class AdminController {
       res.status(500).json({ error: 'Erro ao listar administradores.' });
     }
   }
+
+  async buscarAdminPorId(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const admin = await this.adminService.buscarAdminPorId(Number(id));
+      if (admin) {
+        res.json(admin);
+      } else {
+        res.status(404).json({ error: 'Administrador não encontrado.' });
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar administrador.' });
+    }
+  }
 }
