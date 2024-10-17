@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { BaseEntity } from "./baseEntity";
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from './baseEntity';
 
 /**
  * Enum para representar os anos letivos disponíveis.
@@ -39,22 +39,21 @@ export class Turma extends BaseEntity {
     type: 'enum',
     enum: AnoLetivo
   })
-  anoLetivo: AnoLetivo
+  anoLetivo: AnoLetivo;
 
   @Column({
     type: 'enum',
     enum: PeriodoLetivo
   })
-  periodoLetivo: PeriodoLetivo
+  periodoLetivo: PeriodoLetivo;
 
   @Column({
     type: 'enum',
     enum: TipoEnsino
   })
-  ensino: TipoEnsino
+  ensino: TipoEnsino;
 
-
-  @Column({ 
+  @Column({
     unique: true,
     type: 'varchar',
     length: 20

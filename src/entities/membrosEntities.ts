@@ -1,7 +1,4 @@
-import {
-  Entity,
-  Column,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
 
 import { BaseEntity, TipoConta } from './baseEntity';
 
@@ -22,6 +19,6 @@ export class Membros extends BaseEntity {
   @Column({ unique: true })
   cpf: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: TipoConta })
   tipoConta: TipoConta;
 }
