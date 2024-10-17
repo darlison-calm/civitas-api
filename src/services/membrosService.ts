@@ -11,6 +11,16 @@ export class MembrosService {
     return await membrosRepository.find();
   }
 
+  async buscarMembroPorId(id: string) {
+    if (!MysqlDataSource.isInitialized) {
+      await MysqlDataSource.initialize();
+    }
+
+    const idNumber = Number(id);
+    const membrosRepository = MysqlDataSource.getRepository(Membros);
+    return await membrosRepository.findOneBy({ id: idNumber });
+  }
+
   async criarMembro(dadosMembro: Partial<Membros>) {
     if (!MysqlDataSource.isInitialized) {
       await MysqlDataSource.initialize();
