@@ -44,4 +44,35 @@ export class AdminService {
     novoAdmin.membro = membro;
     return await adminRepository.save(novoAdmin);
   }
+
+  async atualizarAdmin(
+    id: number,
+    apelido: string,
+    senha: string,
+    membroId: number
+  ) {
+    const membrosRepository = MysqlDataSource.getRepository(Membros);
+    const adminRepository = MysqlDataSource.getRepository(Admin);
+
+    const membro = await membrosRepository.findOneBy({ id: membroId });
+    if (!membro) {
+      throw new Error('Membro não encontrado.');
+    }
+
+    const admin = await adminRepository.findOneBy({ id });
+    if (!admin) {
+      return null;
+    }
+
+    if (senha && !validarSenha(senha)) {
+      throw new Error(
+        'A senha deve ter 8 caracteres, incluir pelo menos uma letra maiúscula e um caractere especial.'
+      );
+    }
+
+    admin.apelido = apelido;
+    admin.senha = senha ? await criptografarSenha(senha) : admin.senha;
+    admin.membro = membro;
+    return await adminRepository.save(admin);
+  }
 }

@@ -40,4 +40,24 @@ export class AdminController {
       res.status(500).json({ error: error.message });
     }
   }
+
+  async atualizarAdmin(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { apelido, senha, membroId } = req.body;
+      const adminAtualizado = await this.adminService.atualizarAdmin(
+        Number(id),
+        apelido,
+        senha,
+        Number(membroId)
+      );
+      if (adminAtualizado) {
+        res.json(adminAtualizado);
+      } else {
+        res.status(404).json({ error: 'Administrador não encontrado.' });
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao atualizar administrador.' });
+    }
+  }
 }

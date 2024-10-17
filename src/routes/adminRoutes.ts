@@ -9,5 +9,6 @@ adminRouter.get('/:id', (req, res) =>
   adminController.buscarAdminPorId(req, res)
 );
 adminRouter.post('/', (req, res) => adminController.criarAdmin(req, res));
+adminRouter.put('/:id', (req, res) => adminController.atualizarAdmin(req, res));
 
 export default adminRouter;
