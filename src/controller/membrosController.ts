@@ -35,4 +35,17 @@ export class MembrosController {
       res.status(500).json({ error: 'Erro ao criar membro' });
     }
   }
+
+  async atualizarMembro(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+      const membroAtualizado = await this.membrosService.atualizarMembro(
+        id,
+        req.body
+      );
+      res.json(membroAtualizado);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao atualizar membro' });
+    }
+  }
 }

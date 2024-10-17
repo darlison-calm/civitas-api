@@ -30,4 +30,15 @@ export class MembrosService {
     const novoMembro = membrosRepository.create(dadosMembro);
     return await membrosRepository.save(novoMembro);
   }
+
+  async atualizarMembro(id: string, dadosMembro: Partial<Membros>) {
+    if (!MysqlDataSource.isInitialized) {
+      await MysqlDataSource.initialize();
+    }
+
+    const idNumber = Number(id);
+    const membrosRepository = MysqlDataSource.getRepository(Membros);
+    await membrosRepository.update(idNumber, dadosMembro);
+    return await membrosRepository.findOneBy({ id: idNumber });
+  }
 }
