@@ -11,9 +11,6 @@ export class Admin extends BaseEntity {
   @Column({ unique: true })
   apelido: string;
 
-  @Column({ type: 'enum', enum: TipoConta })
-  tipoConta: TipoConta;
-
   @Column({ unique: true })
   email: string;
 
