@@ -6,7 +6,6 @@
  *       type: object
  *       required:
  *         - numeroMatricula
- *         - email
  *         - nomeCompleto
  *         - dataNascimento
  *         - rg
@@ -19,9 +18,6 @@
  *         numeroMatricula:
  *           type: string
  *           description: Número de matrícula único do membro.
- *         email:
- *           type: string
- *           description: Endereço de e-mail único do membro.
  *         nomeCompleto:
  *           type: string
  *           description: Nome completo do membro.
@@ -50,7 +46,6 @@
  *       example:
  *         id: 1
  *         numeroMatricula: "20221001"
- *         email: "joao.silva@example.com"
  *         nomeCompleto: "João Silva"
  *         dataNascimento: "1990-05-15"
  *         rg: "123456789"
