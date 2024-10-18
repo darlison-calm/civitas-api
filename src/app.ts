@@ -7,6 +7,7 @@ import { swaggerConfig } from './config/swagger';
 
 // import adminRouter from './routes/adminRoutes';
 import membrosRouter from './routes/membrosRoutes';
+import turmasRouter from './routes/turmaRoutes';
 
 MysqlDataSource.initialize()
   .then(() => {
@@ -23,6 +24,7 @@ app.use(cors({ origin: true }));
 
 // app.use('/admin', adminRouter);
 app.use('/membros', membrosRouter);
+app.use('/turmas', turmasRouter);
 
 const swaggerSpec = swaggerJSDoc(swaggerConfig);
 

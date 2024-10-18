@@ -4,7 +4,9 @@ import {
   OneToOne,
   Column,
   BeforeInsert,
-  BeforeUpdate
+  BeforeUpdate,
+  JoinTable,
+  JoinColumn
 } from 'typeorm';
 import { BaseEntity } from './baseEntity';
 import { Membros } from './membrosEntities';
@@ -15,13 +17,14 @@ import {
   compararSenha
 } from '../utils/senhaUtils';
 
-@Entity('Professores')
+@Entity('professores')
 export class Professor extends BaseEntity {
   /**
    * Representa a associação do professor com um membro.
    * Permite incluir dados pessoais.
    */
   @OneToOne(() => Membros)
+  @JoinColumn()
   membro: Membros;
 
   /**
@@ -29,6 +32,7 @@ export class Professor extends BaseEntity {
    * Permite atribuir múltiplas turmas a um professor.
    */
   @ManyToMany(() => Turma)
+  @JoinTable({ name: 'professoresTurma' })
   turmas: Turma[];
 
   @Column()
