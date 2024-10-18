@@ -8,19 +8,17 @@ import { Admin } from '../entities/adminEntities';
 export class AdminController {
   private adminService = new AdminService();
 
-
-/**
- * Lista todos os administradores.
- * @param req - Objeto da requisição HTTP.
- * @param res - Objeto da resposta HTTP.
- * @returns Retorna a lista de administradores em formato JSON ou um erro em caso de falha.
- */
+  /**
+   * Lista todos os administradores.
+   * @param req - Objeto da requisição HTTP.
+   * @param res - Objeto da resposta HTTP.
+   * @returns Retorna a lista de administradores em formato JSON ou um erro em caso de falha.
+   */
   async listarAdmins(req: Request, res: Response): Promise<Response> {
     try {
       const admins = await this.adminService.listarAdmins();
       return res.json(admins);
     } catch (error) {
-
       return res.status(500).json({ error: 'Erro ao listar administradores.' });
     }
   }
@@ -46,8 +44,6 @@ export class AdminController {
     }
   }
 
-
-  
   /**
    * Cria um novo administrador.
    * @param req - Objeto da requisição HTTP, contendo as informações do administrador nos campos do corpo da requisição.
@@ -103,7 +99,6 @@ export class AdminController {
     }
   }
 
-
   /**
    * Exclui um administrador existente.
    * Verifica se o usuário autenticado não está tentando excluir sua própria conta.
@@ -134,7 +129,6 @@ export class AdminController {
       return res.status(500).json({ error: error.message });
     }
   }
-
 
   /**
    * Realiza o login de um administrador e retorna um token JWT.

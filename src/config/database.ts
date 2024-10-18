@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 
 export const MysqlDataSource = new DataSource({
   type: 'mysql',
-  host: process.env.DB_HOST || '172.19.0.2',
+  host: process.env.DB_HOST || '172.20.0.3',
   port: 3306,
   username: process.env.DB_USER || 'orion_root',
   password: process.env.DB_PASSWORD || 'j5m966qp7jiypfda',

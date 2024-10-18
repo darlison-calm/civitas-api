@@ -1,16 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
 /**
- * Middleware para verificar se o usuário é um administrador.
- * Verifica se o usuário possui o tipo de conta 'admin' para permitir o acesso.
- * Se o usuário não for um administrador, retorna um erro de acesso negado.
- *
- * @param req - Objeto da requisição HTTP.
- * @param res - Objeto da resposta HTTP.
- * @param next - Função de callback para passar o controle para o próximo middleware.
- */
-
-/**
  * Verifica se o usuário é um administrador.
  * Se o usuário for um administrador, passa o controle para o próximo middleware.
  * Se o usuário não for um administrador, retorna um erro de acesso negado.

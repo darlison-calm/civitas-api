@@ -5,7 +5,6 @@ import { criptografarSenha, compararSenha } from '../utils/senhaUtils';
 import * as jwt from 'jsonwebtoken';
 
 export class AdminService {
-  
   /**
    * Retorna uma lista de objetos que representam os administradores, incluindo o membro associado a cada um.
    * @returns Uma lista de objetos que representam os administradores.

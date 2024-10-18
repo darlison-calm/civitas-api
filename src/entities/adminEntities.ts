@@ -38,7 +38,7 @@ export class Admin extends BaseEntity {
       this.senha = await criptografarSenha(this.senha);
     }
   }
-  
+
   /**
    * Faz uma verifica o simples se a senha come a com o prefixo do hash bcrypt ($2b$).
    * @returns true se a senha for em formato de texto puro, false caso contrário.
@@ -47,11 +47,11 @@ export class Admin extends BaseEntity {
     return !this.senha.startsWith('$2b$'); // Hash bcrypt começa com $2b$
   }
 
-/**
- * Compara uma senha fornecida com a senha do administrador.
- * @param senhaPlana - A senha em formato de texto puro fornecida pelo usuário.
- * @returns true se as senhas correspondem, false caso contrário.
- */
+  /**
+   * Compara uma senha fornecida com a senha do administrador.
+   * @param senhaPlana - A senha em formato de texto puro fornecida pelo usuário.
+   * @returns true se as senhas correspondem, false caso contrário.
+   */
   async compararSenha(senhaPlana: string): Promise<boolean> {
     return await compararSenha(senhaPlana, this.senha);
   }
