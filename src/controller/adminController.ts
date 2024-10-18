@@ -55,8 +55,6 @@ export class AdminController {
 
     try {
       const senhaCriptografada = await criptografarSenha(senha);
-      console.log('Senha criptografada antes de salvar:', senhaCriptografada);
-
       const novoAdmin = await this.adminService.criarAdmin(
         apelido,
         email,

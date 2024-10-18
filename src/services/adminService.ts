@@ -2,7 +2,8 @@ import { MysqlDataSource } from '../config/database';
 import { Admin } from '../entities/adminEntities';
 import { Membros } from '../entities/membrosEntities';
 import { criptografarSenha, compararSenha } from '../utils/senhaUtils';
-import * as jwt from 'jsonwebtoken';
+import 'dotenv/config';
+import jwt from 'jsonwebtoken';
 
 export class AdminService {
   /**
@@ -134,15 +135,9 @@ export class AdminService {
     if (!senhaValida) {
       throw new Error('Senha inválida.');
     }
-
-    const token = jwt.sign(
-      {
-        id: admin.id,
-        email: admin.email
-      },
-      process.env.JWT_SECRET || 'ChaveSecreta',
-      { expiresIn: '1h' }
-    );
-    return { token };
+    const { id } = admin;
+    jwt.sign({ id, email }, process.env.JWT_SECRET, {
+      expiresIn: '1d'
+    });
   }
 }

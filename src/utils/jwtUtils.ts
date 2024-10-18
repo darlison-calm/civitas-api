@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
-const SECRET_KEY = process.env.JWT_SECRET || 'ChaveSecreta'; // Defina isso no .env em produção
+const SECRET_KEY = process.env.JWT_SECRET;
 
 export interface JwtPayload {
   id: number;
@@ -15,7 +16,7 @@ export interface JwtPayload {
  * @returns O token JWT gerado.
  */
 export function gerarToken(payload: { id: number; email: string }): string {
-  return jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+  return jwt.sign(payload, SECRET_KEY, { expiresIn: '1d' });
 }
 
 /**
