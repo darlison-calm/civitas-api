@@ -23,8 +23,8 @@ export class Professor extends BaseEntity {
    * Representa a associação do professor com um membro.
    * Permite incluir dados pessoais.
    */
-  @OneToOne(() => Membros)
-  @JoinColumn()
+  @OneToOne(() => Membros, { cascade: true })
+  @JoinColumn({ name: 'membroId' })
   membro: Membros;
 
   /**

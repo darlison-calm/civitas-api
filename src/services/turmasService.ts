@@ -57,7 +57,7 @@ class TurmasServiceClass {
    * @param id - O ID da turma a ser deletada (pode ser string ou number).
    * @returns Uma promessa que resolve para o resultado da operação de exclusão
    */
-  async deletar(id: string | number) {
+  async deletar(id: string) {
     const turmaId = this.converterId(id);
     return await this.repository.delete(turmaId);
   }
@@ -68,7 +68,7 @@ class TurmasServiceClass {
    * @param id - O ID da turma a ser buscada (pode ser string ou number).
    * @returns A turma encontrada ou null se não encontrada.
    */
-  async buscarPorId(id: string | number): Promise<Turma | null> {
+  async buscarPorId(id: string): Promise<Turma | null> {
     const turmaId = this.converterId(id);
     return await this.repository.findOneBy({ id: turmaId });
   }
@@ -76,17 +76,3 @@ class TurmasServiceClass {
 
 const TurmasService = new TurmasServiceClass();
 export default TurmasService;
-
-// private camposRequisitados = ['turmaApelido', 'anoLetivo', 'periodoLetivo', 'ensino'];
-
-// validarInput(data: any): { isValid: boolean; error?: string } {
-//   const todosCamposPrenchidos = this.camposRequisitados.every(field => data[field] !== undefined);
-
-//   if (!todosCamposPrenchidos) {
-//     return {
-//       isValid: false,
-//       error: `Dados incompletos. Por favor, forneça ${this.camposRequisitados.join(', ')}.`
-//     };
-//   }
-//   return { isValid: true };
-// }

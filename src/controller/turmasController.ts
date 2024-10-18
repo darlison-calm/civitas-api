@@ -46,14 +46,9 @@ class TurmasControllerClass {
    */
   async buscarTurma(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.params.id;
+      const { id } = req.params;
       const turma = await TurmasService.buscarPorId(id);
-      if (turma) {
-        return res.status(200).json(turma);
-      }
-      return res
-        .status(404)
-        .json({ error: `Turma com ID ${id} não encontrada.` });
+      return res.status(200).json(turma);
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao buscar turma' });
     }
@@ -68,7 +63,7 @@ class TurmasControllerClass {
    */
   async editarTurma(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.params.id;
+      const { id } = req.params;
       const turmaAtualizada = await TurmasService.editar(id, req.body);
       return res.status(200).json(turmaAtualizada);
     } catch (error) {
@@ -85,7 +80,7 @@ class TurmasControllerClass {
    */
   async deletarTurma(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.params.id;
+      const { id } = req.params;
       await TurmasService.deletar(id);
       return res.status(204).send(); // Usar send() para não retornar conteúdo
     } catch (error) {

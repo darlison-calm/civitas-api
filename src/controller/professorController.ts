@@ -1,43 +1,16 @@
 import { Request, Response } from 'express';
 import ProfessorService from '../services/professorService';
-import { MembrosService } from '../services/membrosService';
 
 class ProfessorControllerClass {
-  private membrosService = new MembrosService();
-
   async criarProfessor(req: Request, res: Response) {
     try {
-      const {
-        numeroMatricula,
-        email,
-        nomeCompleto,
-        dataNascimento,
-        rg,
-        cpf,
-        tipoConta,
-        senha
-      } = req.body;
-      if (tipoConta !== 'professor') {
-        return res
-          .status(400)
-          .json({ message: 'O tipo da conta deve ser professor.' });
-      }
-      const novoMembro = await this.membrosService.criarMembro({
-        numeroMatricula,
-        email,
-        nomeCompleto,
-        dataNascimento,
-        rg,
-        cpf,
-        tipoConta
-      });
-      console.log(novoMembro);
+      const { senha, turmas, membroId } = req.body;
 
-      const novoProfessor = await ProfessorService.criar({
-        membro: novoMembro,
-        senha: senha,
-        turmas: null
-      });
+      const novoProfessor = await ProfessorService.criarProfessor(
+        senha,
+        turmas,
+        membroId
+      );
 
       res.status(201).json(novoProfessor);
     } catch (error) {
@@ -47,12 +20,55 @@ class ProfessorControllerClass {
 
   async listarProfessores(req: Request, res: Response) {
     try {
-      const professores = await ProfessorService.listar();
+      const professores = await ProfessorService.listarProfessores();
       res.json(professores);
     } catch (error) {
       res.status(500).json({ message: 'Erro ao listar professores', error });
     }
   }
+
+  async buscarProfessorPorId(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const professorId = Number(id);
+      const professor =
+        await ProfessorService.buscarProfessorPorId(professorId);
+      res.json(professor);
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao buscar professor', error });
+    }
+  }
+
+  async deletarProfessor(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const professorId = Number(id);
+      await ProfessorService.deletarProfessor(professorId);
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao deletar professor', error });
+    }
+  }
+
+  async editarProfessor(req: Request, res: Response): Promise<Response> {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const { turmas, senha, membroId } = req.body;
+
+      const professorAtualizado = await ProfessorService.editar(
+        id,
+        turmas,
+        senha,
+        membroId
+      );
+
+      return res.json(professorAtualizado);
+    } catch (error) {
+      console.error('Erro ao editar professor:', error);
+      return res.status(500).json({ error: error.message });
+    }
+  }
+  
 }
 
 const ProfessorController = new ProfessorControllerClass();

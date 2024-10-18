@@ -1,30 +1,61 @@
 import { Professor } from '../entities/professorEntities';
-// import { Turma } from '../entities/turmasEntities';
 import { MysqlDataSource } from '../config/database';
+import { Turma } from '../entities/turmasEntities';
+import { Membros } from '../entities/membrosEntities';
 
 export class ProfessorServiceClass {
-  private professorRepostiory = MysqlDataSource.getRepository(Professor);
+  private professorRepository = MysqlDataSource.getRepository(Professor);
+  private membrosRepository = MysqlDataSource.getRepository(Membros);
   // private turmaRepository = MysqlDataSource.getRepository(Turma)
 
-  async criar(dadosProfessor: Partial<Professor>): Promise<Professor> {
-    const novoProfessor = this.professorRepostiory.create(dadosProfessor);
-    return await this.professorRepostiory.save(novoProfessor);
+  async criarProfessor(
+    senha: string,
+    turmas: Turma[],
+    membroId: number
+  ): Promise<Professor> {
+    const membro = await this.membrosRepository.findOneBy({ id: membroId });
+    const novoProfessor = this.professorRepository.create({
+      senha,
+      membro,
+      turmas
+    });
+    return await this.professorRepository.save(novoProfessor);
   }
 
-  async listar(): Promise<Professor[]> {
-    return await this.professorRepostiory.find({
+  async listarProfessores(): Promise<Professor[]> {
+    return await this.professorRepository.find({
       relations: ['membro', 'turmas']
     });
   }
 
-  async buscarProfessorPorId(
-    professorId: string | number
-  ): Promise<Professor | null> {
-    const id = Number(professorId);
-    return await this.professorRepostiory.findOne({
+  async buscarProfessorPorId(id: number): Promise<Professor> {
+    return await this.professorRepository.findOne({
       where: { id },
       relations: ['membro', 'turmas']
     });
+  }
+
+  async deletarProfessor(id: number) {
+    return await this.professorRepository.delete(id);
+  }
+
+  async editar(
+    id: number,
+    turmas: Turma[] | null,
+    senha: string,
+    membroId: number
+  ) {
+    const membro = await this.membrosRepository.findOneBy({ id: membroId });
+
+    const professorExistente = await this.professorRepository.findOneBy({ id });
+    professorExistente.turmas = turmas;
+
+    Object.assign(professorExistente, {
+      senha,
+      membro,
+      turmas
+    });
+    return await this.professorRepository.save(professorExistente);
   }
 }
 
