@@ -4,6 +4,7 @@ import swaggerUI from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import { MysqlDataSource } from './config/database';
 import { swaggerConfig } from './config/swagger';
+import alunoRoutes from './routes/alunoRoutes';
 
 MysqlDataSource.initialize()
   .then(() => {
@@ -19,11 +20,12 @@ app.use(express.json());
 app.use(cors({ origin: true }));
 
 const swaggerSpec = swaggerJSDoc(swaggerConfig);
-
 app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.get('/swagger.json', (_req, res) => res.send(swaggerSpec));
 
 console.log(`Add swagger on /swagger`);
+
+app.use('/api', alunoRoutes);
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server listening on port ${process.env.SERVER_PORT}`);

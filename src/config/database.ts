@@ -1,5 +1,14 @@
 import { DataSource } from 'typeorm';
 
+export const getDataSource = () => {
+  if (process.env.NODE_ENV === 'test') {
+    return MysqlDataSource;
+  } else {
+    return MongoDataSource;
+  }
+};
+
+
 export const MongoDataSource = new DataSource({
   name: 'default',
   type: 'mongodb',
