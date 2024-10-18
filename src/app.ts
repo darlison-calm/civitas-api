@@ -8,7 +8,7 @@ import { swaggerConfig } from './config/swagger';
 // import adminRouter from './routes/adminRoutes';
 import membrosRouter from './routes/membrosRoutes';
 import turmasRouter from './routes/turmaRoutes';
-
+import professorRouter from './routes/professorRoutes';
 MysqlDataSource.initialize()
   .then(() => {
     console.log('Database initialized!');
@@ -25,7 +25,7 @@ app.use(cors({ origin: true }));
 // app.use('/admin', adminRouter);
 app.use('/membros', membrosRouter);
 app.use('/turmas', turmasRouter);
-
+app.use('/professores', professorRouter);
 const swaggerSpec = swaggerJSDoc(swaggerConfig);
 
 app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
