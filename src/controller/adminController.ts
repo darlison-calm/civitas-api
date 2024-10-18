@@ -8,21 +8,30 @@ import { Admin } from '../entities/adminEntities';
 export class AdminController {
   private adminService = new AdminService();
 
-  /**
-   * Lista todos os administradores.
-   */
+
+/**
+ * Lista todos os administradores.
+ * @param req - Objeto da requisição HTTP.
+ * @param res - Objeto da resposta HTTP.
+ * @returns Retorna a lista de administradores em formato JSON ou um erro em caso de falha.
+ */
   async listarAdmins(req: Request, res: Response): Promise<Response> {
     try {
       const admins = await this.adminService.listarAdmins();
       return res.json(admins);
     } catch (error) {
+
       return res.status(500).json({ error: 'Erro ao listar administradores.' });
     }
   }
 
   /**
    * Busca um administrador específico pelo ID.
+   * @param req - Objeto da requisição HTTP, contendo o ID do administrador nos parâmetros.
+   * @param res - Objeto da resposta HTTP.
+   * @returns Retorna o administrador correspondente ao ID, ou uma mensagem de erro se não encontrado.
    */
+
   async buscarAdminPorId(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
@@ -37,8 +46,13 @@ export class AdminController {
     }
   }
 
+
+  
   /**
    * Cria um novo administrador.
+   * @param req - Objeto da requisição HTTP, contendo as informações do administrador nos campos do corpo da requisição.
+   * @param res - Objeto da resposta HTTP.
+   * @returns Retorna o novo administrador criado em formato JSON ou um erro em caso de falha.
    */
   async criarAdmin(req: Request, res: Response): Promise<Response> {
     const { apelido, email, senha, membroId } = req.body;
@@ -62,6 +76,9 @@ export class AdminController {
 
   /**
    * Atualiza um administrador existente.
+   * @param req - Objeto da requisição HTTP, contendo o ID do administrador nos parâmetros e os dados atualizados no corpo.
+   * @param res - Objeto da resposta HTTP.
+   * @returns Retorna o administrador atualizado em formato JSON ou um erro em caso de falha.
    */
   async atualizarAdmin(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
@@ -86,8 +103,16 @@ export class AdminController {
     }
   }
 
+
   /**
-   * Deleta um administrador existente.
+   * Exclui um administrador existente.
+   * Verifica se o usuário autenticado não está tentando excluir sua própria conta.
+   * @param req - Objeto da requisição HTTP, contendo o ID do administrador nos parâmetros.
+   * @param res - Objeto da resposta HTTP.
+   * @returns Retorna uma resposta sem conteúdo (204) se o administrador for excluído com sucesso.
+   *          Retorna um erro 403 se o usuário autenticado tentar excluir sua própria conta.
+   *          Retorna um erro 404 se o administrador não for encontrado.
+   *          Retorna um erro 500 se ocorrer um erro inesperado.
    */
   async deletarAdmin(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
@@ -110,8 +135,12 @@ export class AdminController {
     }
   }
 
+
   /**
-   * Realiza o login de um administrador com base no email e senha fornecidos.
+   * Realiza o login de um administrador e retorna um token JWT.
+   * @param req - Objeto da requisição HTTP, contendo o email e senha do administrador nos campos do corpo da requisição.
+   * @param res - Objeto da resposta HTTP.
+   * @returns Retorna um token JWT em formato JSON ou um erro em caso de falha.
    */
   async login(req: Request, res: Response): Promise<Response> {
     const { email, senha } = req.body;

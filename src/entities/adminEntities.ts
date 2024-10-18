@@ -27,18 +27,31 @@ export class Admin extends BaseEntity {
 
   @BeforeInsert()
   @BeforeUpdate()
+
+  /**
+   * Verifica se a senha esá em formato de texto puro e, caso esteja,
+   * a criptografa usando o algoritmo bcrypt.
+   */
   async handleCriptografiaSenha(): Promise<void> {
     // Evita recriptografar senhas que já foram criptografadas
     if (this.senha && this.isSenhaPlainText()) {
       this.senha = await criptografarSenha(this.senha);
     }
   }
-
-  // Verifica se a senha ainda está em texto plano
+  
+  /**
+   * Faz uma verifica o simples se a senha come a com o prefixo do hash bcrypt ($2b$).
+   * @returns true se a senha for em formato de texto puro, false caso contrário.
+   */
   private isSenhaPlainText(): boolean {
     return !this.senha.startsWith('$2b$'); // Hash bcrypt começa com $2b$
   }
 
+/**
+ * Compara uma senha fornecida com a senha do administrador.
+ * @param senhaPlana - A senha em formato de texto puro fornecida pelo usuário.
+ * @returns true se as senhas correspondem, false caso contrário.
+ */
   async compararSenha(senhaPlana: string): Promise<boolean> {
     return await compararSenha(senhaPlana, this.senha);
   }
