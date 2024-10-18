@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { AdminService } from '../services/adminService';
-import { criptografarSenha } from '../utils/senhaUtils';
+import { criptografarSenha, compararSenha } from '../utils/senhaUtils';
+import { gerarToken } from '../utils/jwtUtils';
+import { MysqlDataSource } from '../config/database';
+import { Admin } from '../entities/adminEntities';
 
 export class AdminController {
   private adminService = new AdminService();
@@ -114,9 +117,24 @@ export class AdminController {
     const { email, senha } = req.body;
 
     try {
-      const token = await this.adminService.login(email, senha);
+      const adminRepository = MysqlDataSource.getRepository(Admin);
+      const admin = await adminRepository.findOne({ where: { email } });
+
+      if (!admin) {
+        return res.status(404).json({ error: 'Administrador não encontrado' });
+      }
+
+      const senhaValida = await compararSenha(senha, admin.senha);
+      if (!senhaValida) {
+        return res.status(401).json({ error: 'Senha inválida' });
+      }
+
+      const token = gerarToken({ id: admin.id, email: admin.email });
+
+      // Ajuste para retornar apenas o token
       return res.json({ token });
     } catch (error) {
+      console.error('Erro ao realizar login:', error);
       return res.status(500).json({ error: 'Erro ao realizar login' });
     }
   }

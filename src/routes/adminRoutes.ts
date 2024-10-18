@@ -94,8 +94,6 @@
  *   post:
  *     summary: Cria um novo administrador
  *     tags: [Administradores]
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -242,7 +240,7 @@ adminRouter.post('/login', (req, res) => adminController.login(req, res));
 /**
  * Rota para listar todos os administradores.
  */
-adminRouter.get('/', authenticateJWT, isAdmin, (req, res) => 
+adminRouter.get('/', authenticateJWT, isAdmin, (req, res) =>
   adminController.listarAdmins(req, res)
 );
 
