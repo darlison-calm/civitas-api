@@ -1,51 +1,70 @@
 import { Request, Response } from 'express';
 import { AdminService } from '../services/adminService';
+import { criptografarSenha } from '../utils/senhaUtils';
 
 export class AdminController {
   private adminService = new AdminService();
 
-  async listarAdmins(req: Request, res: Response) {
+  /**
+   * Lista todos os administradores.
+   */
+  async listarAdmins(req: Request, res: Response): Promise<Response> {
     try {
       const admins = await this.adminService.listarAdmins();
-      res.json(admins);
+      return res.json(admins);
     } catch (error) {
-      res.status(500).json({ error: 'Erro ao listar administradores.' });
+      return res.status(500).json({ error: 'Erro ao listar administradores.' });
     }
   }
 
-  async buscarAdminPorId(req: Request, res: Response) {
+  /**
+   * Busca um administrador específico pelo ID.
+   */
+  async buscarAdminPorId(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
     try {
-      const { id } = req.params;
       const admin = await this.adminService.buscarAdminPorId(Number(id));
       if (admin) {
-        res.json(admin);
-      } else {
-        res.status(404).json({ error: 'Administrador não encontrado.' });
+        return res.json(admin);
       }
+      return res.status(404).json({ error: 'Administrador não encontrado.' });
     } catch (error) {
-      res.status(500).json({ error: 'Erro ao buscar administrador.' });
+      return res.status(500).json({ error: 'Erro ao buscar administrador.' });
     }
   }
 
-  async criarAdmin(req: Request, res: Response) {
+  /**
+   * Cria um novo administrador.
+   */
+  async criarAdmin(req: Request, res: Response): Promise<Response> {
+    const { apelido, email, senha, membroId } = req.body;
+
     try {
-      const { apelido, email, senha, membroId } = req.body;
+      const senhaCriptografada = await criptografarSenha(senha);
+      console.log('Senha criptografada antes de salvar:', senhaCriptografada);
+
       const novoAdmin = await this.adminService.criarAdmin(
         apelido,
         email,
-        senha,
+        senhaCriptografada,
         Number(membroId)
       );
-      res.status(201).json(novoAdmin);
+
+      return res.status(201).json(novoAdmin);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      return res.status(500).json({ error: error.message });
     }
   }
 
-  async atualizarAdmin(req: Request, res: Response) {
+  /**
+   * Atualiza um administrador existente.
+   */
+  async atualizarAdmin(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const { apelido, email, senha, membroId } = req.body;
+
     try {
-      const { id } = req.params;
-      const { apelido, email, senha, membroId } = req.body;
       const adminAtualizado = await this.adminService.atualizarAdmin(
         Number(id),
         apelido,
@@ -54,26 +73,51 @@ export class AdminController {
         Number(membroId)
       );
       if (adminAtualizado) {
-        res.json(adminAtualizado);
-      } else {
-        res.status(404).json({ error: 'Administrador não encontrado.' });
+        return res.json(adminAtualizado);
       }
+      return res.status(404).json({ error: 'Administrador não encontrado.' });
     } catch (error) {
-      res.status(500).json({ error: 'Erro ao atualizar administrador.' });
+      return res
+        .status(500)
+        .json({ error: 'Erro ao atualizar administrador.' });
     }
   }
 
-  async deletarAdmin(req: Request, res: Response) {
+  /**
+   * Deleta um administrador existente.
+   */
+  async deletarAdmin(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const adminAutenticadoId = req.user?.id;
     try {
-      const { id } = req.params;
+      if (Number(id) === adminAutenticadoId) {
+        return res
+          .status(403)
+          .json({ error: 'Você não pode excluir sua própria conta.' });
+      }
+
       const resultado = await this.adminService.deletarAdmin(Number(id));
       if (resultado.affected) {
-        res.status(204).send();
-      } else {
-        res.status(404).json({ error: 'Administrador não encontrado.' });
+        return res.status(204).send();
       }
+      return res.status(404).json({ error: 'Administrador não encontrado.' });
     } catch (error) {
-      res.status(500).json({ error: 'Erro ao deletar administrador.' });
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
+  /**
+   * Realiza o login de um administrador com base no email e senha fornecidos.
+   */
+  async login(req: Request, res: Response): Promise<Response> {
+    const { email, senha } = req.body;
+
+    try {
+      const token = await this.adminService.login(email, senha);
+      return res.json({ token });
+    } catch (error) {
+      return res.status(500).json({ error: 'Erro ao realizar login' });
     }
   }
 }

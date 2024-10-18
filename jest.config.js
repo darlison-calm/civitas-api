@@ -8,7 +8,7 @@ export default {
     testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.ts$',
     globals: {
       'ts-jest': {
-        tsconfig: 'tsconfig.json', // Certifique-se de que esse arquivo existe
+        tsconfig: 'tsconfig.json',
       },
     },
   };  
