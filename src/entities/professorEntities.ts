@@ -33,7 +33,7 @@ export class Professor extends BaseEntity {
    */
   @ManyToMany(() => Turma)
   @JoinTable({ name: 'professoresTurma' })
-  turmas: Turma[];
+  turmas: Turma[] | null;
 
   @Column()
   senha: string;
