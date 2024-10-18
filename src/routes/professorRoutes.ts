@@ -14,7 +14,9 @@ professorRouter.get('/:id', (req, res) =>
   ProfessorController.buscarProfessorPorId(req, res)
 );
 
-professorRouter.put('/:id', (req, res) => ProfessorController.editarProfessor(req, res));
+professorRouter.put('/:id', (req, res) =>
+  ProfessorController.editarProfessor(req, res)
+);
 
 professorRouter.delete('/:id', (req, res) =>
   ProfessorController.deletarProfessor(req, res)
