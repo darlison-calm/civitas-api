@@ -8,5 +8,6 @@ responsaveisRouter.get('/', responsaveisController.listarResponsaveis);
 responsaveisRouter.get('/:id', responsaveisController.buscarResponsavelPorId);
 responsaveisRouter.post('/', responsaveisController.criarResponsavel);
 responsaveisRouter.put('/:id', responsaveisController.atualizarResponsavel);
+responsaveisRouter.delete('/:id', responsaveisController.deletarResponsavel);
 
 export default responsaveisRouter;

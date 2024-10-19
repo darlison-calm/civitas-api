@@ -29,4 +29,10 @@ export class ResponsaveisController {
       await responsaveisService.atualizarResponsavel(id, dadosResponsavel);
     return res.json(responsavelAtualizado);
   }
+
+  async deletarResponsavel(req: Request, res: Response) {
+    const { id } = req.params;
+    const resultado = await responsaveisService.deletarResponsavel(id);
+    return res.json({ message: 'Responsável deletado com sucesso', resultado });
+  }
 }
