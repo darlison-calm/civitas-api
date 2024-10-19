@@ -6,6 +6,7 @@ const SECRET_KEY = process.env.JWT_SECRET;
 export interface JwtPayload {
   id: number;
   email: string;
+  tipoConta: string;
   iat?: number;
   exp?: number;
 }
@@ -15,7 +16,11 @@ export interface JwtPayload {
  * @param payload - O payload com informações do usuário a serem incluídas no token.
  * @returns O token JWT gerado.
  */
-export function gerarToken(payload: { id: number; email: string }): string {
+export function gerarToken(payload: {
+  id: number;
+  email: string;
+  tipoConta: string;
+}): string {
   return jwt.sign(payload, SECRET_KEY, { expiresIn: '1d' });
 }
 

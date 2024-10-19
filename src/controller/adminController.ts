@@ -150,7 +150,11 @@ export class AdminController {
         return res.status(401).json({ error: 'Senha inválida' });
       }
 
-      const token = gerarToken({ id: admin.id, email: admin.email });
+      const token = gerarToken({
+        id: admin.id,
+        email: admin.email,
+        tipoConta: admin.membro?.tipoConta
+      });
 
       // Ajuste para retornar apenas o token
       return res.json({ token });
