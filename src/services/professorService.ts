@@ -61,6 +61,12 @@ export class ProfessorServiceClass {
    * @returns O resultado da operação de deleção.
    */
   async deletarProfessor(id: number) {
+    const professor = await this.professorRepository.findOne({
+      where: { id },
+      relations: ['membro']
+    });
+
+    await this.membrosRepository.delete(professor.membro.id);
     return await this.professorRepository.delete(id);
   }
   /**

@@ -3,10 +3,7 @@ import 'dotenv/config';
 
 export const MysqlDataSource = new DataSource({
   type: 'mysql',
-  host: process.env.DB_HOST,
-  port: 3306,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+  url: process.env.DB_CONNECTION_STRING,
   database: process.env.DB_DATABASE,
   entities: ['src/entities/**/*.ts', 'dist/entities/*.js'],
   logging: true,

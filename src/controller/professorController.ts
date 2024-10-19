@@ -86,7 +86,7 @@ class ProfessorControllerClass {
    */
   async editarProfessor(req: Request, res: Response): Promise<Response> {
     try {
-      const id = parseInt(req.params.id, 10);
+      const id = Number(req.params.id);
       const { turmas, senha, membroId } = req.body;
 
       const professorAtualizado = await ProfessorService.editar(
