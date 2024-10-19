@@ -1,13 +1,13 @@
 import { MysqlDataSource } from '../config/database';
 import { Turma } from '../entities/turmasEntities';
 import { Membros } from '../entities/membrosEntities';
-import { Aluno } from '../entities/alunoEntities';
+import { Alunos } from '../entities/alunosEntities';
 
 export class AlunosServiceClass {
   private membrosRepository = MysqlDataSource.getRepository(Membros);
-  private alunosRepository = MysqlDataSource.getRepository(Aluno);
+  private alunosRepository = MysqlDataSource.getRepository(Alunos);
 
-  async criarAluno(turma: Turma, membroId: number): Promise<Aluno> {
+  async criarAluno(turma: Turma, membroId: number): Promise<Alunos> {
     const membro = await this.membrosRepository.findOneBy({ id: membroId });
     const novoAluno = this.alunosRepository.create({
       membro,
@@ -16,12 +16,12 @@ export class AlunosServiceClass {
     return await this.alunosRepository.save(novoAluno);
   }
 
-  async listarAlunos(): Promise<Aluno[]> {
+  async listarAlunos(): Promise<Alunos[]> {
     return await this.alunosRepository.find({
       relations: ['membro', 'turma']
     });
   }
-  async buscarAlunoPorId(id: number): Promise<Aluno> {
+  async buscarAlunoPorId(id: number): Promise<Alunos> {
     return await this.alunosRepository.findOne({
       where: { id },
       relations: ['membro', 'turma']

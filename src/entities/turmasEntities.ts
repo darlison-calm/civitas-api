@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './baseEntity';
-import { Aluno } from './alunoEntities';
+import { Alunos } from './alunosEntities';
 /**
  * Enum para representar os anos letivos disponíveis.
  * @enum {string}
@@ -60,6 +60,6 @@ export class Turma extends BaseEntity {
   })
   turmaApelido: string;
 
-  @OneToMany(() => Aluno, (aluno) => aluno.turma)
-  alunos: Aluno[];
+  @OneToMany(() => Alunos, (aluno) => aluno.turma)
+  alunos: Alunos[];
 }
