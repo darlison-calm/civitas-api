@@ -125,7 +125,12 @@ export class AdminService {
    */
   async login(email: string, senha: string) {
     const adminRepository = MysqlDataSource.getRepository(Admin);
-    const admin = await adminRepository.findOne({ where: { email } });
+
+    // Carrega o admin e o relacionamento com a entidade Membros
+    const admin = await adminRepository.findOne({
+      where: { email },
+      relations: ['membro']
+    });
 
     if (!admin) {
       throw new Error('Administrador não encontrado.');
@@ -135,9 +140,24 @@ export class AdminService {
     if (!senhaValida) {
       throw new Error('Senha inválida.');
     }
+
+    // Acessa o campo `tipoConta` a partir da entidade Membros
     const { id } = admin;
-    jwt.sign({ id, email }, process.env.JWT_SECRET, {
-      expiresIn: '1d'
-    });
+    const tipoConta = admin.membro?.tipoConta;
+
+    if (!tipoConta) {
+      throw new Error('Tipo de conta não encontrado.');
+    }
+
+    // Gera o token JWT com o campo `tipoConta`
+    const token = jwt.sign(
+      { id, email: admin.email, tipoConta },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '1d'
+      }
+    );
+
+    return { token };
   }
 }
