@@ -3,7 +3,7 @@ import {
   Column,
   BeforeInsert,
   BeforeUpdate,
-  ManyToOne,
+  OneToOne,
   JoinColumn
 } from 'typeorm';
 import { BaseEntity } from './baseEntity';
@@ -21,7 +21,7 @@ export class Admin extends BaseEntity {
   @Column()
   senha: string;
 
-  @ManyToOne(() => Membros, { eager: true })
+  @OneToOne(() => Membros, { eager: true })
   @JoinColumn({ name: 'membroId' })
   membro: Membros;
 
