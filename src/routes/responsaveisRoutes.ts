@@ -2,8 +2,11 @@
  * @swagger
  * tags:
  *   name: Responsaveis
- *   description: API para gerenciar responsáveis
- *
+ *   description: Gerenciamento de responsáveis
+ */
+
+/**
+ * @swagger
  * components:
  *   schemas:
  *     Responsavel:
@@ -22,7 +25,7 @@
  *           type: array
  *           items:
  *             $ref: '#/components/schemas/Aluno'
- *           description: Lista de alunos sob responsabilidade deste responsável
+ *           description: Lista de alunos sob responsabilidade desse responsável
  *         dataCriacao:
  *           type: string
  *           format: date-time
@@ -83,7 +86,10 @@
  *         - membroId
  *         - adminId
  *         - responsavelId
- *
+ */
+
+/**
+ * @swagger
  * /responsaveis:
  *   get:
  *     summary: Lista todos os responsáveis
@@ -99,7 +105,10 @@
  *                 $ref: '#/components/schemas/Responsavel'
  *       500:
  *         description: Erro ao listar responsáveis
- *
+ */
+
+/**
+ * @swagger
  * /responsaveis/{id}:
  *   get:
  *     summary: Busca um responsável pelo ID
@@ -122,7 +131,10 @@
  *         description: Responsável não encontrado
  *       500:
  *         description: Erro ao buscar responsável
- *
+ */
+
+/**
+ * @swagger
  * /responsaveis:
  *   post:
  *     summary: Cria um novo responsável
@@ -142,7 +154,10 @@
  *               $ref: '#/components/schemas/Responsavel'
  *       500:
  *         description: Erro ao criar responsável
- *
+ */
+
+/**
+ * @swagger
  * /responsaveis/{id}:
  *   put:
  *     summary: Atualiza um responsável existente
@@ -171,7 +186,10 @@
  *         description: Responsável não encontrado
  *       500:
  *         description: Erro ao atualizar responsável
- *
+ */
+
+/**
+ * @swagger
  * /responsaveis/{id}:
  *   delete:
  *     summary: Deleta um responsável
