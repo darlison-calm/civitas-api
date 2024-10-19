@@ -1,6 +1,10 @@
-import { EntidadeBase } from "entities/entidadeBase.entity";
-import { Column, Entity } from "typeorm";
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from './baseEntity';
 
+/**
+ * Enum para representar os anos letivos disponíveis.
+ * @enum {string}
+ */
 export enum AnoLetivo {
   ANO_1 = '1º ano',
   ANO_2 = '2º ano',
@@ -10,12 +14,19 @@ export enum AnoLetivo {
   ANO_6 = '6º ano'
 }
 
+/**
+ * Enum para representar os periodos letivos disponíveis.
+ * @enum {string}
+ */
 export enum PeriodoLetivo {
   MANHA = 'Manhã',
   TARDE = 'Tarde',
   NOITE = 'Noite'
 }
-
+/**
+ * Enum para representar os tipos de ensino.
+ * @enum {string}
+ */
 export enum TipoEnsino {
   MATERNAL = 'Maternal',
   PRE_ESCOLA = 'Pré-escola',
@@ -23,28 +34,29 @@ export enum TipoEnsino {
 }
 
 @Entity('turmas')
-export class Turmas extends EntidadeBase {
+export class Turma extends BaseEntity {
   @Column({
     type: 'enum',
     enum: AnoLetivo
   })
-  anoLetivo: AnoLetivo
+  anoLetivo: AnoLetivo;
 
   @Column({
     type: 'enum',
     enum: PeriodoLetivo
   })
-  periodoLetivo: PeriodoLetivo
+  periodoLetivo: PeriodoLetivo;
 
   @Column({
     type: 'enum',
     enum: TipoEnsino
   })
-  ensino: TipoEnsino
+  ensino: TipoEnsino;
 
-  @Column({ 
+  @Column({
     unique: true,
-    type: 'text'
+    type: 'varchar',
+    length: 20
   })
   turmaApelido: string;
 }
