@@ -11,11 +11,7 @@ import {
 import { BaseEntity } from './baseEntity';
 import { Membros } from './membrosEntities';
 import { Turma } from './turmasEntities';
-import {
-  criptografarSenha,
-  CriptografarSenhaAntesDeInserir,
-  compararSenha
-} from '../utils/senhaUtils';
+import { criptografarSenha, compararSenha } from '../utils/senhaUtils';
 
 @Entity('professores')
 export class Professor extends BaseEntity {
@@ -43,7 +39,6 @@ export class Professor extends BaseEntity {
    * Esse decorator é responsável por chamar automaticamente a lógica de
    * criptografia ao inserir um novo administrador no banco de dados.
    */
-  @CriptografarSenhaAntesDeInserir()
   async criptografarSenha() {
     // A lógica de criptografia está implementada no decorator CriptografarSenhaAntesDeInserir.
   }
