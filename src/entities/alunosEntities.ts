@@ -8,7 +8,7 @@ import { Responsaveis } from './responsaveisEntities';
  * Um aluno está associado a um membro (OneToOne),
  * um admin (ManyToOne), e um responsável (ManyToOne).
  */
-@Entity()
+@Entity('alunos')
 export class Alunos extends BaseEntity {
   /**
    * Relacionamento OneToOne com a entidade Membros.
@@ -30,7 +30,7 @@ export class Alunos extends BaseEntity {
    * Relacionamento ManyToOne com a entidade Responsaveis.
    * Cada aluno tem exatamente um responsável.
    */
-  @ManyToOne(() => Responsaveis, { eager: true })
+  @ManyToOne(() => Responsaveis, (responsavel) => responsavel.alunos)
   @JoinColumn({ name: 'responsavelId' })
   responsavel: Responsaveis;
 }
