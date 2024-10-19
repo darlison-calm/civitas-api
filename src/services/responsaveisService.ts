@@ -29,4 +29,17 @@ export class ResponsaveisService {
     const novoResponsavel = responsaveisRepository.create(dadosResponsavel);
     return await responsaveisRepository.save(novoResponsavel);
   }
+
+  async atualizarResponsavel(
+    id: string,
+    dadosResponsavel: Partial<Responsaveis>
+  ) {
+    if (!MysqlDataSource.isInitialized) {
+      await MysqlDataSource.initialize();
+    }
+
+    const responsaveisRepository = MysqlDataSource.getRepository(Responsaveis);
+    await responsaveisRepository.update(id, dadosResponsavel);
+    return await responsaveisRepository.findOneBy({ id: Number(id) });
+  }
 }

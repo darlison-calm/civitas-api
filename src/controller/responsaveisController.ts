@@ -21,4 +21,12 @@ export class ResponsaveisController {
       await responsaveisService.criarResponsavel(dadosResponsavel);
     return res.json(responsavelCriado);
   }
+
+  async atualizarResponsavel(req: Request, res: Response) {
+    const { id } = req.params;
+    const dadosResponsavel = req.body;
+    const responsavelAtualizado =
+      await responsaveisService.atualizarResponsavel(id, dadosResponsavel);
+    return res.json(responsavelAtualizado);
+  }
 }
