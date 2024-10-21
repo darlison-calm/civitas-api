@@ -1,6 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from './baseEntity';
-
+import { Admin } from './adminEntities';
 /**
  * Enum para representar os anos letivos disponíveis.
  * @enum {string}
@@ -59,4 +59,7 @@ export class Turma extends BaseEntity {
     length: 20
   })
   turmaApelido: string;
+
+  @ManyToOne(() => Admin)
+  admin: Admin;
 }
