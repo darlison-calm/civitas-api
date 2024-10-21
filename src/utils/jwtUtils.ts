@@ -28,7 +28,7 @@ export function gerarToken(payload: {
  * Verifica a validade de um token JWT.
  * @param token - O token JWT a ser verificado.
  * @returns O payload decodificado do token se for válido.
- * @throws Erro se o token for inválido ou expirado.
+ * @throws {Error} Se o token for inválido ou expirado.
  */
 export const verificarToken = (token: string): JwtPayload => {
   try {
