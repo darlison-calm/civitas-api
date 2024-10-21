@@ -125,7 +125,6 @@ export class AdminController {
       return res.status(500).json({ error: error.message });
     }
   }
-
   /**
    * Realiza o login de um administrador e retorna um token JWT.
    * @param req - Objeto da requisição HTTP, contendo o email e senha do administrador no corpo.
@@ -149,19 +148,20 @@ export class AdminController {
       erros.push({ campo: 'senha', erro: 'Senha é obrigatória' });
     }
 
-    // Se houver erros, retorna com código 400
+    // Se houver erros de validação, retorna com código 400
     if (erros.length > 0) {
-      return res
-        .status(401)
-        .json({ error: 'Seu e-mail ou senha estão incorretos.' });
+      return res.status(400).json({ erros });
     }
 
     try {
+      // Tenta realizar o login após a validação dos campos
       const { token } = await this.adminService.login(email, senha);
       return res.json({ token });
     } catch (error) {
-      console.error('Erro ao realizar login:', error);
-      return res.status(500).json({ error: error.message });
+      // Se as credenciais forem inválidas, retorna um erro de autenticação
+      return res
+        .status(401)
+        .json({ error: 'Seu e-mail ou senha estão incorretos.' });
     }
   }
 
