@@ -41,10 +41,7 @@ class TurmasServiceClass {
    * @param dadosTurma - Dados atualizados da turma. Pode ser um objeto parcial da entidade `Turma`.
    * @returns A turma atualizada ou null se não encontrada.
    */
-  async editar(
-    id: number | string,
-    dadosTurma: Partial<Turma>
-  ): Promise<Turma | null> {
+  async editar(id: number | string, dadosTurma: Partial<Turma>) {
     const turmaId = this.converterId(id);
     const turmaExistente = await this.repository.findOneBy({ id: turmaId });
     Object.assign(turmaExistente, dadosTurma);

@@ -4,11 +4,13 @@ import {
   BeforeInsert,
   BeforeUpdate,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
+  OneToMany
 } from 'typeorm';
 import { BaseEntity } from './baseEntity';
 import { Membros } from './membrosEntities';
 import { compararSenha, criptografarSenha } from '../utils/senhaUtils';
+import { Turma } from './turmasEntities';
 
 @Entity()
 export class Admin extends BaseEntity {
@@ -24,6 +26,9 @@ export class Admin extends BaseEntity {
   @ManyToOne(() => Membros, { eager: true })
   @JoinColumn({ name: 'membroId' })
   membro: Membros;
+
+  @OneToMany(() => Turma, (turma) => turma.admin)
+  turmas: Turma[];
 
   @BeforeInsert()
   @BeforeUpdate()

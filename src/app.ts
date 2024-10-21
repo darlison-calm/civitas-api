@@ -4,14 +4,15 @@ import swaggerUI from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import { MysqlDataSource } from './config/database';
 import { swaggerConfig } from './config/swagger';
-
 import adminRouter from './routes/adminRoutes';
 import membrosRouter from './routes/membrosRoutes';
 import turmasRouter from './routes/turmaRoutes';
 import professorRouter from './routes/professorRoutes';
+import { inserirTurmarIniciais } from './utils/seedTurmas';
 MysqlDataSource.initialize()
   .then(() => {
     console.log('Database initialized!');
+    inserirTurmarIniciais();
   })
   .catch((err) => {
     console.error('Database Error: ', err);
